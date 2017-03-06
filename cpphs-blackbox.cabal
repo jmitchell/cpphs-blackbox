@@ -18,7 +18,7 @@ build-type:          Simple
 extra-doc-files:
   README.md
   CHANGES.txt
-cabal-version:       >=1.10
+cabal-version:       >=1.18
 
 source-repository head
   type: git
