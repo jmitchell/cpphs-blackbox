@@ -1,3 +1,4 @@
-[![Travis Build Status](https://travis-ci.org/jmitchell/cpphs-blackbox.svg?branch=master)](https://travis-ci.org/jmitchell/cpphs-blackbox) [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/v2dic775omq6ettm/branch/master?svg=true)](https://ci.appveyor.com/project/jmitchell/cpphs-blackbox/branch/master)
+# cpphs-blackbox [![Linux Build Status](https://img.shields.io/travis/jmitchell/cpphs-blackbox.svg?label=Linux%20build)](https://travis-ci.org/jmitchell/cpphs-blackbox) [![Windows Build Status](https://img.shields.io/appveyor/ci/jmitchell/cpphs-blackbox.svg?label=Windows%20build)](https://ci.appveyor.com/project/jmitchell/cpphs-blackbox)
 
-
+Blackbox testing for cpphs Haskell package on a variety of operating
+systems and GHC versions.

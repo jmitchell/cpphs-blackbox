@@ -6,6 +6,8 @@ description:
         operating systems and GHC versions. To fix that this project
         does some basic sanity checks with help from CI services.
 homepage:            https://github.com/jmitchell/cpphs-blackbox
+bug-reports:         https://github.com/jmitchell/cpphs-blackbox/issues
+tested-with:         GHC==8.0.2, GHC==7.10.3, GHC==7.8.4, GHC==7.6.3, GHC==7.4.2
 license:             MIT
 license-file:        LICENSE
 author:              Jacob Mitchell
@@ -13,7 +15,9 @@ maintainer:          jmitchell@member.fsf.org
 copyright:           Jacob Mitchell 2017
 category:            Testing
 build-type:          Simple
-extra-source-files:  ChangeLog.md
+extra-doc-files:
+  README.md
+  CHANGES.txt
 cabal-version:       >=1.10
 
 source-repository head
