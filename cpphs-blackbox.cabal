@@ -4,7 +4,7 @@ synopsis:            Blackbox test of cpphs (a Haskell package)
 description:
         It's currently difficult to test cpphs on a variety of
         operating systems and GHC versions. To fix that this project
-        does some basic sanity checks with the helping of CI services.
+        does some basic sanity checks with help from CI services.
 homepage:            https://github.com/jmitchell/cpphs-blackbox
 license:             MIT
 license-file:        LICENSE
