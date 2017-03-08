@@ -1,0 +1,222 @@
+1 patch for repository http://code.haskell.org/cpphs:
+
+patch 8f36ac2b7f1925811bd8e4f66e0234b6221fe431
+Author: jmitchell@member.fsf.org
+Date:   Wed Mar  8 09:23:05 PST 2017
+  * Avoid using findFile; GHC 7.4 doesn't include it.
+  
+  See https://github.com/malcolmwallace/cpphs/issues/9
+  
+
+New patches:
+
+[Avoid using findFile; GHC 7.4 doesn't include it.
+jmitchell@member.fsf.org**20170308172305
+ Ignore-this: 1a882cc4f7ff794a1d0b285e8473c3b4
+ 
+ See https://github.com/malcolmwallace/cpphs/issues/9
+ 
+] {
+hunk ./Language/Preprocessor/Cpphs/ReadFirst.hs 21
+-import System.Directory (doesFileExist,findFile)
+-import System.FilePath  (isRelative)
++import System.Directory (doesFileExist)
++import System.FilePath  (isRelative, (</>))
+hunk ./Language/Preprocessor/Cpphs/ReadFirst.hs 59
++    findFile [] fname = do
++      exists <- doesFileExist fname
++      if (not $ isRelative fname) && exists
++        then do return $ Just fname
++        else do return Nothing
++    findFile (d:ds) fname = do
++      let path = d </> fname
++      exists <- doesFileExist path
++      if exists
++        then do return $ Just path
++        else findFile ds fname
++
++
+}
+
+Context:
+
+[Windows path support
+jmitchell@member.fsf.org**20170218002336
+ Ignore-this: 5721ea048d086675871103b2d912b627
+] 
+[Bump version to 1.20.3
+Malcolm.Wallace@me.com**20170206185548
+ Ignore-this: b9e8af12b385d55ef5646e5ded83dec3
+] 
+[Recognise a windows absolute path in a #include.
+Malcolm.Wallace@me.com**20170206184218
+ Ignore-this: b692979085465e04fdc88df439ceac6c
+] 
+[Bump version to 1.20.2
+Malcolm.Wallace@me.com**20160905163256
+ Ignore-this: dd8ad28b307e71c2624be89870c92088
+] 
+[Ensure that all file handles are UTF8.
+Malcolm.Wallace@me.com**20160905135433
+ Ignore-this: baf85bbb0f60416f16d79da0222c8cef
+] 
+[fix version number (1.20.1)
+Malcolm.Wallace@me.com**20160304093306
+ Ignore-this: 90e17a649843c29d0b3c583c9278fc0c
+] 
+[version bump to 1.20 and copyright date to 2016
+malcolm.wallace@me.com**20160302135718
+ Ignore-this: 22c5bf6c961ca7205041c21e62ae6fec
+] 
+[bump version to 1.19.3
+Malcolm.Wallace@me.com**20150823090844
+ Ignore-this: 998f299252ebd6a6667f8aa732c2e79b
+] 
+[Fix build error, bump version to 1.19.2
+malcolm.wallace@me.com**20150731073028
+ Ignore-this: 9cbea321d6ef17e69cc89b0345893239
+] 
+[bump version to 1.19.1
+Malcolm.Wallace@me.com**20150730195840
+ Ignore-this: fd74b5a49296b267832479d3f1c6c933
+] 
+[Tighten up copyright info, and add LGPL static linking exception.
+Malcolm.Wallace@me.com**20150330140703
+ Ignore-this: 59189eb662ab5780c23837bbf9e9b7ab
+] 
+[Bump version to 1.19.
+Malcolm.Wallace@me.com**20150330140603
+ Ignore-this: a293e757bdf75ccdf49f9a0e89d9679d
+] 
+[expose more of cpphs' API
+Stefan Wehr <wehr@cp-med.com>**20150323211504
+ Ignore-this: 64d6196abd2f6eb4f9c50334a211a14d
+] 
+[bump version to 1.18.9
+Malcolm.Wallace@me.com**20150220134200
+ Ignore-this: beb4c3a785a24b067dd9f1afafbfe954
+] 
+[release date
+Malcolm.Wallace@me.com**20150120090901
+ Ignore-this: 8dcc039ddbef1e6d40601ff8ed1f78b4
+] 
+[Fixed version number.
+Andrés Sicard-Ramírez <asr@eafit.edu.co>**20150119141829
+ Ignore-this: 938d70283c931a81da499be22e5ed3b1
+] 
+[bump version to 1.18.7
+Malcolm.Wallace@me.com**20150117115456
+ Ignore-this: a60b0ef352ca9f9e450c10e3537226
+] 
+[Allow for an absolute filepath in a #include.
+Malcolm.Wallace@me.com**20150117115052
+ Ignore-this: 117c51425020422da8f447c11ebb45e3
+] 
+[Bump version to 1.18.6
+malcolm.wallace@me.com**20141017132504
+ Ignore-this: 6b010cbcdcc7146971a88fa4af0b553b
+] 
+[build options
+malcolm.wallace@me.com**20141017095348
+ Ignore-this: 495aad5c68804b55d387381b020a0c6
+] 
+[Bump version to 1.18.5
+malcolm.wallace@me.com**20140626104714
+ Ignore-this: 4eabc3ede3ffccecff640116e3013c2d
+] 
+[Fix a windows directory separator bug in #includes.
+malcolm.wallace@me.com**20140626104544
+ Ignore-this: 8f90a0e8be02c2b21095fb49fb6d6d36
+] 
+[bump version to 1.18.4
+Malcolm.Wallace@me.com**20140322105649
+ Ignore-this: 71851b59733702c5a521183ed505ad85
+] 
+[bump to 1.18.3
+Malcolm.Wallace@me.com**20140303143726
+ Ignore-this: 6b33282c0812e2e48742aef5369f664d
+] 
+[Completely rewrite the #if parsing engine, using polyparse.
+malcolm.wallace@me.com**20140226153538
+ Ignore-this: ccf015c8d54b1b665c592783cef36751
+] 
+[bump to 1.18.2
+Malcolm.Wallace@me.com**20140303140341
+ Ignore-this: 47bac0a810a59f6f5650fb8e1e0f965c
+] 
+[Avoid repeated work in the #if boolean expression parser.
+Malcolm.Wallace@me.com**20140224083747
+ Ignore-this: 777a07df3f3b827c66c15a374a6629a6
+] 
+[Add a test for a bug identified by Roman Cheplyaka, and fix it.
+Malcolm.Wallace@me.com**20140224083236
+ Ignore-this: 4c31a489463ad63b5b57d90561a1ff65
+] 
+[bump version to 1.18.1
+Malcolm.Wallace@me.com**20140218085802
+ Ignore-this: e115e60278da699b967db914d6bf156
+] 
+[Bump version to 1.18
+Malcolm.Wallace@me.com**20140204152050
+ Ignore-this: 1ce37b35ebb5a9ad8eab45de70af4250
+] 
+[support for correctly lexing template haskell name quotes
+Stefan Wehr <wehr@factisresearch.com>**20140204145447
+ Ignore-this: 295642f81cb01774989dd4a43dca255e
+] 
+[Missed an instance of the version number.
+Malcolm.Wallace@me.com**20130818125414
+ Ignore-this: 4284730501fc164c7dabd41430981ab7
+] 
+[Make a version 1.17.1 which reports its own version number correctly.
+Malcolm.Wallace@me.com**20130818125214
+ Ignore-this: d5e5edef44645b1237a9cb18b7c46505
+] 
+[bump version to 1.17
+Malcolm.Wallace@me.com**20130816162411
+ Ignore-this: d7a70ea2b6901d2196a1133b3f81c654
+] 
+[Add test for bug just fixed (recursive evaluation in #if after macro expansion)
+Malcolm.Wallace@me.com**20130816162311
+ Ignore-this: 2be963e3c2032ac00b4d1177a63d4416
+] 
+[Take care to trim trailing slashes on include paths, even when using the
+malcolm.wallace@me.com**20130311095055
+ Ignore-this: fb6a7abd432117d8ca49aa94801bf500
+ library API.
+] 
+[Bump version to 1.16
+Malcolm.Wallace@me.com**20130122171030
+ Ignore-this: 1f95638d42142a335b603e41bf6f2308
+] 
+[Fix runCpphsReturningSymTab when macros=False.
+Malcolm.Wallace@me.com**20130115181253
+ Ignore-this: bc67881414193aed5888ee5495807238
+] 
+[Bump version number to 1.15
+Malcolm.Wallace@me.com**20121130105248
+ Ignore-this: 922b8c394678fe84828ef6eb72e19df3
+] 
+[Do no crash when # appears on a line of its own.
+Malcolm.Wallace@me.com**20121130105049
+ Ignore-this: 11029ede3d7b355d4b7c9bb2ef33db24
+] 
+[Allow both --nomacro and --strip together.
+Malcolm.Wallace@me.com**20121130103549
+ Ignore-this: ed728f97865da01cafff17d8c9a59d6e
+ Previously, --nomacro implied no lexing, and hence no stripping of comments.
+] 
+[Add tests for the interaction of --nomacro with --strip.
+Malcolm.Wallace@me.com**20121130103537
+ Ignore-this: 58cb0659eda5ccb211ad164503f7a0bf
+ Until now, --nomacro has meant no lexing, and hence no stripping of
+ comments, which is wrong.
+] 
+[Some more package args required in Makefile.
+Malcolm.Wallace@me.com**20120716071938] 
+[TAG version 1.14
+malcolm.wallace@me.com**20120711141904
+ Ignore-this: e06a7b857c1e324c2cd03df61f48e545
+] 
+Patch bundle hash:
+dafa200b54d2eb09ff7eb001daae0154f6b17570
